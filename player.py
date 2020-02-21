@@ -1,5 +1,6 @@
 import getpass
 import sqlite3
+import user
 
 class Player:
 
@@ -14,30 +15,17 @@ class Player:
         self.cursor.execute(sql, user)
         self.conn.commit()
 
-    #unused function, SQL manages data now
-    def create_unique_file(self, username, password):
-        fname = open(r"users_db/" + str(username) + ".txt", "w+")
-        try:
-            fname.write(username)
-            fname.write("\n")
-            fname.write(password)
-        except NameError:
-            print("Error occured!", NameError)
-        else:
-            print("User created successfully!")
-
-        fname.close()
 
     def check_user(self, username, password):
-        user = (username, password)
-        sql = ("SELECT username, password FROM users_data WHERE username = ? AND password = ?")
-        self.cursor.execute(sql, user)
+        user_ = (username, password)
+        sql = ("SELECT username, password, ID FROM users_data WHERE username = ? AND password = ?")
+        self.cursor.execute(sql, user_)
         fetched_row = self.cursor.fetchone()
-        print(fetched_row)
-        if(fetched_row[0] == username and fetched_row[1] == password):
-            return True
+
+        if(fetched_row != None and (fetched_row[0] == username and fetched_row[1] == password)):
+            return True, fetched_row[2]
         else:
-            return False
+            return False, None
 
     def registration(self):
         print("Hello first time user!\nEnter your username and password below so we can add them to our database!")
@@ -55,8 +43,10 @@ class Player:
 
         username = input("Enter username: ")
         password = getpass.getpass("Enter password: ")
-        if (self.check_user(username, password)):
+        user_ok, id = self.check_user(username, password)
+        if (user_ok):
             print("Logged in successfully! :)")
+            user_ = user.User(username, password, id, self.conn, self.cursor)
 
         else:
             print("Something went wrong! :(")
