@@ -1,5 +1,6 @@
 import playlist
 import player
+import getpass
 
 class User:
 
@@ -29,10 +30,50 @@ class User:
 
 
     def change_username(self):
-        pass
+        new_username = input("Enter new username: ")
+
+        if(input("Confirm password: ") == self.password):
+            print("Changing username...")
+
+            user_ = (new_username, self.id)
+            sql = ("UPDATE users_data SET username = ? WHERE ID = ?")
+
+            try:
+                self.cursor.execute(sql, user_)
+                self.conn.commit()
+                self.username = new_username
+                print("Changed username!")
+
+            except NameError:
+                print("Something went wrong: ")
+                print(NameError)
+
+        else:
+            print("Wrong password! Try again.")
+            self.change_username()
 
     def change_password(self):
-        pass
+        new_password = getpass.getpass("Enter new password: ")
+
+        if (input("Enter previous password: ") == self.password):
+            print("Changing password...")
+
+            user_ = (new_password, self.id)
+            sql = ("UPDATE users_data SET password = ? WHERE ID = ?")
+
+            try:
+                self.cursor.execute(sql, user_)
+                self.conn.commit()
+                self.password = new_password
+                print("Changed password!")
+
+            except NameError:
+                print("Something went wrong: ")
+                print(NameError)
+
+        else:
+            print("Wrong password! Try again.")
+            self.change_username()
 
 
 
