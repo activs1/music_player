@@ -1,9 +1,8 @@
 
 class Song:
 
-    def __init__(self, name, artist, length, album = None):
+    def __init__(self, name, artist, length):
         self.name = name
         self.artist = artist
         self.length = length
-        self.album = album
 
