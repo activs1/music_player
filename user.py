@@ -84,7 +84,7 @@ class User:
         name --> name of the playlist
 
         If successful returns ID of the created playlist (playlistID is a autoincrement column in playlists table)
-        If not successful prints raised Error and return a None type object
+        If not successful prints raised Error and returns a None type object
 
         """
 
@@ -95,8 +95,13 @@ class User:
             id = self.cursor.lastrowid
             self.conn.commit()
             return id
-        except NameError:
-            print(NameError)
+
+        except Exception as exception:
+            print(exception)
+            return None
+
+        except NameError as err:
+            print(err)
             return None
 
 
@@ -108,8 +113,24 @@ class User:
         playlist_ = playlist.Playlist(name, id, self.id, self.conn, self.cursor)
         self.playlists.append(playlist_)
 
+    def delete_playlist(self, playlist_id, index):
+        sql = ("DELETE FROM playlists WHERE playlistID = ?")
+
+        try:
+            self.cursor.execute(sql, (playlist_id, ))
+
+        except NameError:
+            print("Something went wrong.")
+            print(NameError)
+
+        else:
+            self.conn.commit()
+            self.playlists.remove(self.playlists[index - 1])
+            print("Deleted playlist.")
+
 
     def logout(self):
+        del self
         player_ = player.Player()
 
 

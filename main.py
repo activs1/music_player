@@ -1,9 +1,7 @@
 import player
 
 def main():
-    p = player.Player()
-
-
+    run = player.Player()
 
 if __name__ == "__main__":
     main()
