@@ -28,11 +28,7 @@ def get_music_file_info(path):
         print("Something went wrong.")
         print(exception)
         return None
-    
-    except NameError as err:
-        print("Something went wrong.")
-        print(err)
-        return None
+
     
     else:
         artist = properties.GetValue(pscon.PKEY_Music_Artist).GetValue()[0]
@@ -62,52 +58,6 @@ def open_file_dialog():
 
     info = get_music_file_info(file_path)
     return info
-
-
-
-
-##playsound.playsound("C:\\Users\\Maciek\\Desktop\\Rise Against - Savior.mp3".encode('utf-8'), True)
-#
-#
-#from pydub import AudioSegment
-#from pydub.playback import play
-#
-#
-#song = AudioSegment.from_mp3(file = 'C:\\Users\\Maciek\\Desktop\\Rise Against - Savior.mp3')
-#
-##song.export("final.wav", format="wav")
-#
-#
-#
-##import simpleaudio as sa
-##
-##wave_obj = sa.WaveObject.from_wave_file(r"C:\Users\Maciek\Desktop\Rise Against - Savior.mp3")
-##play_obj = wave_obj.play()
-##play_obj.wait_done()
-#
-##import vlc
-##p = vlc.MediaPlayer("C:/Users/Maciek/Desktop/Rise Against - Savior.mp3")
-##p.play()
-
-
-
-
-from pygame import mixer
-
-mixer.init()
-mixer.music.load("C:/Users/Maciek/Desktop/Rise Against - Savior.mp3")
-mixer.music.stop()
-#mixer.music.unload()
-
-
-
-
-
-
-
-
-
-
 
 
 
