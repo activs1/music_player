@@ -1,13 +1,6 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 24 11:57:07 2020
-
-@author: Maciek
-"""
 from win32com.propsys import propsys, pscon
 import tkinter as tk
 from tkinter import filedialog
-import playsound
 
 
 def get_music_file_info(path):
@@ -50,11 +43,19 @@ def get_music_file_info(path):
 
 
 def open_file_dialog():
+
+    '''
+
+    This function opens file dialog (from tkinter) and asks user to select a file.
+    Path to the selected file is being sent to get_music_file_info()
+    Returns same thing as get_music_file_info()
+
+    '''
+
     root = tk.Tk()
     root.withdraw()
 
     file_path = filedialog.askopenfilename().replace("/", "\\")
-
 
     info = get_music_file_info(file_path)
     return info
